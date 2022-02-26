@@ -28,13 +28,12 @@ import me.yusaf.Logger;
  *
  */
 public class BsaFile {
-	public List<String> allFilenames = new ArrayList<>();
 	private List<BsaFolderRecord> folders = new ArrayList<>();
 	private Map<String, BsaFileRecord> files = new LinkedHashMap<>();
 	public static Logger logger = Logger.getInstance(BsaFile.class);
 
 	/**
-	 * Key should be the texture path and value should be bsa archive name
+	 * Key should be the file path and value should be bsa archive name
 	 */
 	public static Map<String, BsaFile> lookupMap = new LinkedHashMap<>();
 
@@ -168,7 +167,7 @@ public class BsaFile {
 						// Name of the file with the path and backslash is important for loading
 						String nameWithPath = (fold.name + "\\" + fr.name).toLowerCase();
 						fr.nameWithPath = nameWithPath;
-						lookupMap.put(nameWithPath, this);
+						BsaManager.saveBsaFileRecord(nameWithPath, this);
 						logger.extra("Name: " + bsaName);
 						logger.extra("NameWithPath: " + nameWithPath);
 						files.put(nameWithPath, fr);
@@ -178,7 +177,6 @@ public class BsaFile {
 		} finally {
 			accessFile.close();
 		}
-		allFilenames.addAll(files.keySet());
 	}
 
 	/**
@@ -275,6 +273,7 @@ public class BsaFile {
 					return decompressedBytes;
 				}
 			} else {
+				totalFileBytes = new byte[len];
 				raf.readFully(totalFileBytes);
 			}
 		} finally {
@@ -317,7 +316,7 @@ public class BsaFile {
 	}
 
 	public List<String> getFilenames() {
-		return files.keySet().stream().collect(Collectors.toList());
+		return files.keySet().stream().sorted().collect(Collectors.toList());
 	}
 
 	public String getName() {
