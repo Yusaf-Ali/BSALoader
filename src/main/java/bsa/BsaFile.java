@@ -319,12 +319,20 @@ public class BsaFile {
 		return files.keySet().stream().sorted().collect(Collectors.toList());
 	}
 
+	public Map<String, BsaFileRecord> getFileRecords() {
+		return files;
+	}
+
 	public String getName() {
 		return bsaName;
 	}
 
 	public void setName(String name) {
 		this.bsaName = name;
+	}
+
+	public String getFilePath() {
+		return location.getAbsolutePath();
 	}
 
 	private byte[] processLz4File(byte[] totalFileBytes, int originalSize, String fullname) throws IOException {

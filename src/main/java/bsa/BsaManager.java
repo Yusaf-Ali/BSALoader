@@ -112,7 +112,7 @@ public class BsaManager {
 			return archives.get(matchRating.keySet().stream().collect(Collectors.toList()).get(0));
 		}
 		Optional<Entry<String, Integer>> matched = matchRating.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
-		return bsaFiles.get(matched.get().getKey());
+		return archives.get(matched.get().getKey());
 	}
 
 	public static void saveBsaFileRecord(String nameWithPath, BsaFile bsaFile) {

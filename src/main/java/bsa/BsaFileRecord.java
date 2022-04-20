@@ -1,7 +1,9 @@
 package bsa;
 
-import java.io.*;
-import java.nio.*;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class BsaFileRecord {
 	// hash
@@ -34,6 +36,14 @@ public class BsaFileRecord {
 
 	public void setNameLength(byte b) {
 		this.nameLength = Byte.toUnsignedInt(b);
+	}
+
+	public int getOffset() {
+		return offset;
+	}
+
+	public int getSize() {
+		return size;
 	}
 
 	@Override
